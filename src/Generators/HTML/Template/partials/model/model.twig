@@ -1,0 +1,20 @@
+<div class="flex- flex-col mb-2 w-1/2">
+
+    <!-- Model Title -->
+    <div id="{{model}}_model"
+         class="endpoint flex bg-black bg-grey-lighter items-center p-2 border border-grey-lightest text-grey-dark hover:bg-grey-lightest cursor-pointer">
+        {{ model|capitalize }}
+    </div>
+
+    <!--Model Body-->
+    <div class="endpoint-body hidden">
+        <div class="flex flex-col border-r border-l border-b border-grey-lightest rounded">
+            <div class="bg-black text-sm p-5">
+                <pre class="json overflow-scroll p-5">
+                    {{ modelBody|json_encode() }}
+                </pre>
+            </div>
+        </div>
+    </div>
+
+</div>

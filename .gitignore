@@ -1,0 +1,6 @@
+/vendor/
+/log/*
+!/logs/README.md
+/.idea
+.env.testing
+/tests/_reports/

@@ -1,0 +1,16 @@
+language: php
+
+php:
+- nightly
+
+before_install:
+- if [[ $coverage = 'false' ]]; then phpenv config-rm xdebug.ini; fi
+
+before_script:
+- composer install
+
+after_success:
+- if [[ $coverage = 'true' ]]; then bash <(curl -s https://codecov.io/bash); fi
+
+notifications:
+  email: mvaliolahi@gmail.com

@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/preflight.min.css" rel="stylesheet">
+
+    <!--Custom Styles-->
+    <style>
+
+        html {
+            margin-left: calc(100vw - 100%) !important;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 10rem;
+            font-family: "Lucida Console", Monaco, monospace;
+            font-size: 0.8rem;
+            line-height: 1.2;
+        }
+
+        .backgroundColor {
+            {%  if backgroundColor is not null %}
+                background-color: {{ backgroundColor }} !important;
+            {% endif %}
+        }
+
+        .bg-parameters {
+            background-color: rgb(34, 243, 143);
+            height: 2px;
+        }
+
+        .bg-headers {
+            background-color: rgb(36, 222, 243);
+            height: 2px;
+        }
+
+        .flex-2 {
+            flex: 2;
+        }
+
+        /*ScrollBar*/
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #22292F;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00cbf5;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #babaf5a623ba;
+        }
+
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/utilities.min.css" rel="stylesheet">
+
+    <!--JQuery-->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+    <!--HighlightJs-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+
+</head>
+<body class="bg-indigo-dark text-white backgroundColor">
+<div class="flex flex-col justify-start items-center mt-5 mb-10">
+
+    <!--Basic Information-->
+    <div class="mb-10 text-center">
+        <h1 class="mb-5">{{ title }}</h1>
+        <a href="{{ baseUrl }}" class="mb-5 text-white no-underline">{{ baseUrl }}</a>
+        <p class="mt-5 mb-5">{{ description }}</p>
+    </div>
+
+    <!--Section Title-->
+    <div class="mb-5">
+        <h3>Endpoints</h3>
+    </div>
+
+    <!--Endpoint DeepLinks-->
+    {% include 'partials/deeplinks/endpoint.twig' %}
+
+    {% for group, endpoint in endpoints %}
+
+        {% if group is string %} <!-- Is really a group -->
+
+            {% set hiddenEndpointBody = "hidden" %}
+            {% include 'partials/group/group.twig' %}
+
+        {% else %} <!-- an endpoint inside a group -->
+
+            {% set _endpoint = endpoint %}
+            {% set group = endpoint['url'] %}
+            {% set hiddenEndpointBody = "" %}
+            {% include 'partials/group/single_group.twig' %}
+
+        {% endif %}
+    {% endfor %}
+
+    <!--Section Title-->
+    <div class="mt-10 mb-5">
+        <h3>Models</h3>
+    </div>
+
+    <!--Model DeepLinks-->
+    {% include 'partials/deeplinks/model.twig' %}
+
+    <!--Models-->
+    <div class="flex flex-col items-center w-full mt-10">
+
+        <!--Group Title-->
+        <div class="group flex justify-between py-2 mb-1 w-1/2 cursor-pointer border-b-2 hover:border-grey-light hover:text-grey-light font-bold">
+            <div class="flex flex-1 justify-center text-lg">+</div>
+        </div>
+
+        <!--Group Body-->
+        <div id="model-group-body" class=" group-body w-full">
+            <!--Endpoints Container-->
+            <div class="flex flex-col flex-2 items-center justify-start">
+                <!-- Models -->
+                {% for model, modelBody in models %}
+                    {% include 'partials/model/model.twig' %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        // Format Json (Response Body)
+        $('.json').each(function (index, json) {
+            var jsonObj = JSON.parse($(json).text());
+            var jsonPretty = JSON.stringify(jsonObj, null, '\t');
+            $(json).text(jsonPretty);
+        });
+
+        // Group Toggle
+        $('.group').click(function () {
+            $(this).next().toggle();
+        });
+
+        // Endpoints Toggle
+        $('.endpoint').click(function () {
+            $(this).next().toggle();
+        });
+
+        // Deep-Links
+        $('.deep-link').click(function () {
+            showGroupBody(this);
+        });
+
+        $('.model-deep-link').click(function () {
+            showGroupBody(this);
+        });
+
+        /**
+         *
+         * @param context
+         */
+        function showGroupBody(context) {
+            var groupName = $(context).data('group');
+            $('#' + groupName).next().toggle();
+
+            // Expand Model Group Body
+            $('#model-group-body').show();
+        }
+
+    });
+</script>
+
+</body>
+</html>

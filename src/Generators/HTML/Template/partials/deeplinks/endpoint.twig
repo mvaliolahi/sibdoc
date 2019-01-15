@@ -1,0 +1,10 @@
+<div class="flex w-1/2 flex-wrap mb-5">
+
+    {% for group in groups %}
+        <a href="#{{group}}" data-group="{{group|md5}}"
+           class="deep-link no-underline px-4 py-1 border border-white rounded-full bg-yellow hover:bg-yellow-light hover:text-grey m-1">
+            {{ group }}
+        </a>
+    {% endfor %}
+
+</div>

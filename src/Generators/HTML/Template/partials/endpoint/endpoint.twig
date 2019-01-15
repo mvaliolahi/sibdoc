@@ -1,0 +1,133 @@
+{% if  _endpoint['method'] == 'GET' %}
+    {% set methodColor = 'bg-blue' %}
+{% elseif  _endpoint['method'] == 'POST' %}
+    {% set methodColor = 'bg-green-dark' %}
+{% elseif  _endpoint['method'] == 'PUT' %}
+    {% set methodColor = 'bg-orange' %}
+{% elseif  _endpoint['method'] == 'PATCH' %}
+    {% set methodColor = 'bg-orange-light' %}
+{% elseif  _endpoint['method'] == 'DELETE' %}
+    {% set methodColor = 'bg-red' %}
+{% else %}
+    {% set methodColor = 'bg-black' %}
+{% endif %}
+
+<!-- Endpoint Inside Group -->
+<div class="flex- flex-col mb-2 w-1/2">
+
+    <!-- Endpoint Title -->
+    <div class="flex endpoint flex bg-black bg-grey-lighter items-center p-2 border border-grey-lightest rounded text-grey-dark hover:bg-grey-lightest cursor-pointer">
+        <div class="mr-2 {{ methodColor }} p-2 rounded text-sm text-white">{{ _endpoint['method'] }}</div>
+        /
+        <div class="ml-2 font-bold text-grey-light">
+            <span class=" text-grey">{{ _endpoint['url'] }}</span>
+            <span class="text-xs ml-1"> {{ _endpoint['http']['request']['title'] }} </span>
+        </div>
+        <div class="flex justify-end flex-1">
+            <!-- Version -->
+            {% if  _endpoint['http']['request']['version'] is not null %}
+                <div class=" flex bg-blue-light px-3 py-1 rounded-full text-sm font-normal text-white">
+                    {{ _endpoint['http']['request']['version'] }}
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <!--Endpoint Body-->
+    <div class="endpoint-body {{ hiddenEndpointBody }} mt-2">
+        <div class="flex flex-col border-r border-l border-b border-grey-lightest rounded -mt-4">
+            <!--Request-->
+            <div class="bg-grey-lightest p-3 text-grey-dark border-b flex items-center">
+                <span>  Request </span>
+            </div>
+            <div class="bg-grey-lightest p-3 text-grey text-xs">
+                {{ _endpoint['http']['request']['description'] }}
+            </div>
+
+            <!--Headers-->
+            {% if _endpoint['http']['request']['headers']|length > 0 %}
+                <div class="bg-grey-lightest p-3">
+                    <div class="mb-2 text-grey-dark">Headers</div>
+                    <div class="bg-headers"></div>
+
+                    {% for _headerKey, _headerValue in _endpoint['http']['request']['headers'] %}
+                        <div class="flex flex-row justify-around text-black border-b p-3 text-grey-dark">
+                            <div class="flex-1">{{ _headerKey }}</div>
+                            <div class="flex-1">{{ _headerValue }}</div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+
+            <!--Parameters-->
+            {% if _endpoint['http']['request']['parameters']|length > 0 %}
+                <div class="bg-grey-lightest p-3">
+                    <div class="mb-2 text-grey-dark">Parameters</div>
+                    <div class="bg-parameters"></div>
+                    {% for _paramKey, _paramValue in _endpoint['http']['request']['parameters'] %}
+
+                        <div class="flex flex-row justify-around text-black border-b p-3 text-grey-dark">
+                            <div class="flex-1">{{ _paramKey }}</div>
+                            <div class="flex-1">{{ _paramValue }}</div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+
+            <!-- Responses -->
+            <div class="bg-blue-lightest p-3 text-grey-dark border-b">
+                Responses
+            </div>
+            {% for _response in _endpoint['http']['response'] %}
+                <!--Headers-->
+                {% if _endpoint['http']['response']['headers']|length > 0 %}
+                    <div class="bg-grey-lightest p-3">
+                        <div class="mb-2 text-grey-dark">Headers</div>
+                        <div class="bg-headers"></div>
+                        {% for _headerKey, _headerValue in _endpoint['http']['response']['headers'] %}
+                            <div class="flex flex-row justify-around text-black border-b p-3 text-grey-dark">
+                                <div class="flex-1">{{ _headerKey }}</div>
+                                <div class="flex-1">{{ _headerValue }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Code -->
+                {% if _response['code'] is not null %}
+                    <div class="bg-grey-lightest p-3 text-grey text-sm border-l">
+                        Code: {{ _response['code'] }}
+                    </div>
+                {% endif %}
+
+                <!-- Title -->
+                {% if _response['title'] is string %}
+                    <div class="bg-grey-lightest p-3 text-grey text-sm border-l">
+                        {{ _response['title'] }}
+                    </div>
+                {% endif %}
+
+                <!-- Description -->
+                {% if _response['description'] is string %}
+                    <div class="bg-grey-lightest p-3 text-grey text-xs">
+                        {{ _response['description'] }}
+                    </div>
+                {% endif %}
+
+                <!-- Body -->
+                {% if _response['body'] is not null %}
+                    <div class="bg-black text-sm p-5">
+                        <pre class="json overflow-scroll p-5">
+                            {{ _response['body']|json_encode() }}
+                        </pre>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+    </div>
+
+</div>

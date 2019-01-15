@@ -1,0 +1,18 @@
+<!-- Group Container -->
+<div class="flex flex-col items-center w-full">
+
+    <!--Group Title-->
+    <div id="{{ group|md5 }}"
+         class="group flex justify-between py-2 mb-1 w-1/2 cursor-pointer border-b-2 hover:border-grey-light hover:text-grey-light font-bold">
+            {{ group|upper }}
+    </div>
+
+    <!--Group Body-->
+    <div class="hidden group-body w-full">
+        <!--Endpoints Container-->
+        <div class="flex flex-col flex-2 items-center justify-start">
+            {% include 'partials/endpoint/endpoint.twig' %}
+        </div>
+    </div>
+
+</div>
