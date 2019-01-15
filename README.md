@@ -3,7 +3,7 @@
 [![Latest Stable Version](https://poser.pugx.org/mvaliolahi/sibdoc/v/stable)](https://packagist.org/packages/mvaliolahi/sibdoc)
 [![Total Downloads](https://poser.pugx.org/mvaliolahi/sibdoc/downloads)](https://packagist.org/packages/mvaliolahi/sibdoc)
 [![Build Status](https://travis-ci.org/mvaliolahi/sibdoc.svg?branch=master)](https://travis-ci.org/mvaliolahi/sibdoc)
-[![StyleCI](https://github.styleci.io/repos/113749373/shield?style=flat)](https://github.styleci.io/repos/113749373)
+[![StyleCI](https://github.styleci.io/repos/165880013/shield?style=flat)](https://github.styleci.io/repos/165880013)
 [![PHP-Eye](https://php-eye.com/badge/mvaliolahi/sibdoc/tested.svg?style=flat)](https://php-eye.com/package/mvaliolahi/sibdoc)
 [![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan) 
 [![codecov](https://codecov.io/gh/mvaliolahi/sibdoc/branch/master/graph/badge.svg)](https://codecov.io/gh/mvaliolahi/sibdoc) 
@@ -19,7 +19,7 @@ composer require mvaliolahi/sibdoc
 ```
 
 #### 1. Instantiate SibDoc.
-To generate your awesome API Document create an instance of:
+To generate document for your awesome API create an instance of SibDoc:
 
 ```php
 $api =  new SibDoc([
