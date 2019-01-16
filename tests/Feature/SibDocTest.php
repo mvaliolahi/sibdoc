@@ -713,6 +713,38 @@ class SibDocTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function it_should_be_able_to_export_mocked_version()
+    {
+        $this->api->get('products', function (Request $request) {
+
+            $request->title('Get all products.');
+            $request->version(1);
+
+            $success = (new Response())
+                ->title('Success')
+                ->body([
+                    'status'   => 'success',
+                    'messages' => 'Products fetched successfully.',
+                    'data'     => [
+                        'id'       => 'numeric',
+                        'name'     => 'string',
+                        'category' => 'string',
+                    ]
+                ]);
+
+            $request->response($success);
+
+        });
+
+        $this->dd($this->api->saveMockTo($path = __DIR__ . '/../temp/'));
+        $this->assertFileExists($path .= '/api-mock.html');
+
+//        unlink($path);
+    }
+
+    /**
      *
      */
     protected function setUp()

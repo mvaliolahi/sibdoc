@@ -306,4 +306,13 @@ class SibDoc
 
         return (new HTML($this))->format($path);
     }
+
+    /**
+     * @param null $path
+     * @return mixed
+     */
+    public function saveMockTo($path = null)
+    {
+        return (new Generators\Mock\Mock($this))->format($path);
+    }
 }
