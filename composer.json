@@ -1,11 +1,11 @@
 {
   "name": "mvaliolahi/sibdoc",
   "license": "MIT",
-  "description": "PHP API Builder",
+  "description": "PHP API Document Generator",
   "keywords": [
     "API Document Generator",
-    "API Document",
-    "APIDoc"
+    "API Document Builder",
+    "API Document"
   ],
   "homepage": "https://mvaliolahi.ir",
   "authors": [
